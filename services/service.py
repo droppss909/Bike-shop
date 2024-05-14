@@ -23,15 +23,15 @@ def get_service(id: int, db: Session):
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to create service. Error: {}".format(str(e))) 
 
-def post_service(service: ServiceModel, db: Session):
+def post_service(db: Session):
     try:
         max_id = db.query(func.max(Service.id)).scalar()
         new_id = max_id + 1 if max_id else 1 
-        db_service = Service(id=new_id, **service.dict())
+        db_service = Service(id=new_id, name=" ", description=" ", price=" ")
         db.add(db_service)
         db.commit()
         db.refresh(db_service)
-        return {"acknowledge"}
+        return {"Id is": new_id}
 
     except Exception as e:
         db.rollback()
@@ -87,15 +87,15 @@ def get_appointment(id, db: Session):
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to get appointment. Error: {}".format(str(e))) 
 
-def post_appointment(appointment: AppointmentModel, db: Session):
+def post_appointment(db: Session):
     try:
         max_id = db.query(func.max(Appointments.id)).scalar()
         new_id = max_id + 1 if max_id else 1 
-        db_appointment = Appointments(id=new_id, **appointment.dict(), posted=False)
+        db_appointment = Appointments(id=new_id, customer_id=-1, date=" ", services=[], posted=False)
         db.add(db_appointment)
         db.commit()
         db.refresh(db_appointment)
-        return {"acknowledge"}
+        return {"Id is": new_id}
 
     except Exception as e:
         db.rollback()

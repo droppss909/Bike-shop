@@ -19,11 +19,11 @@ def get_customer(id: int, db: Session):
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to get customer. Error: {}".format(str(e))) 
 
-def add_customer(customer, db):
+def add_customer(db):
     try:
         max_id = db.query(func.max(Customers.id)).scalar()
         new_id = max_id + 1 if max_id else 1 
-        db_customer = Customers(id=new_id, **customer.dict())
+        db_customer = Customers(id=new_id, name=" ", surname=" ")
         db.add(db_customer)
         db.commit()
         db.refresh(db_customer)

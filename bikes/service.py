@@ -20,15 +20,15 @@ def get_bike(id: int, db: Session):
     except Exception as e:
         raise HTTPException(status_code=500, detail="Failed to get bike. Error: {}".format(str(e)))
 
-def add_bike(bike: BikeCreate, db: Session):
+def add_bike(db: Session):
     try:
         max_id = db.query(func.max(Bike.id)).scalar()
         new_id = max_id + 1 if max_id else 1 
-        db_bike = Bike(id=new_id, **bike.dict())
+        db_bike = Bike(id=new_id, brand=" ", model=" ", year=" ", price=" ", equipment=" ", color=" ")
         db.add(db_bike)
         db.commit()
         db.refresh(db_bike)
-        return {"acknowledge"}
+        return {"id_is": new_id}
 
     except Exception as e:
         db.rollback()

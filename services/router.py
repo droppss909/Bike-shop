@@ -19,8 +19,8 @@ def get_service_router(id: int, db: Session = Depends(get_db)):
     return get_service(id, db)
 
 @router.post("/")
-def post_service_router(service: ServiceModel, db: Session = Depends(get_db)):
-    return post_service(service,db)
+def post_service_router(db: Session = Depends(get_db)):
+    return post_service(db)
 
 @router.delete("/{id}")
 def delete_service_router(id: int, db: Session = Depends(get_db)):

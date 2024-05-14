@@ -19,8 +19,8 @@ def get_bike_router(id: int, db: Session = Depends(get_db)):
     return get_bike(id,db)
 
 @router.post("/")
-def add_bike_router(bike: BikeCreate, db: Session = Depends(get_db)):
-    return add_bike(bike, db)
+def add_bike_router(db: Session = Depends(get_db)):
+    return add_bike(db)
 
 @router.delete("/{id}")
 def delete_bike_router(id: int, db: Session = Depends(get_db)):

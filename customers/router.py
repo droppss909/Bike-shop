@@ -20,8 +20,8 @@ def get_customer_router(id: int, db: Session = Depends(get_db)):
     return get_customer(id,db)
 
 @router.post("/")
-def add_customer_router(customer: CustomerCreate, db: Session = Depends(get_db)):
-    return add_customer(customer,db)
+def add_customer_router(db: Session = Depends(get_db)):
+    return add_customer(db)
 
 @router.delete("/{id}")
 def delete_customer_router(id: int, db: Session = Depends(get_db)):
