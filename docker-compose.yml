@@ -7,7 +7,10 @@ services:
       - 5432:5432
     volumes:
       - ~/apps/postgres:/var/lib/postgresql/data
+      - ./script.sql:/script.sql
     environment:
       - POSTGRES_PASSWORD=password
       - POSTGRES_USER=master
       - POSTGRES_DB=main
+
+  

@@ -1,7 +1,9 @@
 from sqlalchemy import Boolean, Text, Column, Integer, String, DateTime, ForeignKey, Date
 from database.database import Base
-from sqlalchemy.orm import relationship
+from sqlalchemy.orm import relationship, declarative_base
 
+
+Base = declarative_base()
 
 class Bike(Base):
     __tablename__ = "bikes"
@@ -13,5 +15,6 @@ class Bike(Base):
     price = Column(String(length=5), nullable=False)
     equipment = Column(String(length=20), nullable=False)
     color = Column(String(length=10), nullable=True)
+    version = Column(Integer, default=0)
 
 

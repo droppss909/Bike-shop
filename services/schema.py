@@ -11,6 +11,7 @@ class ServiceModel(BaseModel):
 
 
 class AppointmentModel(BaseModel):
+    appointment_id: int
     customer_id: int
     date: str
     services: List[int]

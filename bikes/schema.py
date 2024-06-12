@@ -12,6 +12,7 @@ class BikeModel(BaseModel):
     price: str
     equipment: str
     color: str
+    version: int
 
 class BikeCreate(BaseModel):
     brand: str

@@ -6,7 +6,7 @@ from sqlalchemy.orm import Session
 from fastapi import HTTPException
 from customers.schema import CustomerModel, CustomerCreate
 from customers.model import Customers
-from customers.service import get_customers, get_customer, add_customer, delete_customer, update_customer
+from customers.service import get_customers, get_amount_of_customers, get_customer, add_customer, delete_customer, update_customer
 
 
 router = APIRouter(prefix="/customers", tags=["customers"])
@@ -18,6 +18,10 @@ def get_list_customers(db: Session = Depends(get_db)):
 @router.get("/{id}", response_model=CustomerModel)
 def get_customer_router(id: int, db: Session = Depends(get_db)):
     return get_customer(id,db)
+
+@router.get("%{amount}", response_model=list[CustomerModel])
+def  get_amount_of_customers_router(amount: int, db: Session = Depends(get_db)):
+    return get_amount_of_customers(amount, db)
 
 @router.post("/")
 def add_customer_router(db: Session = Depends(get_db)):

@@ -53,7 +53,7 @@ def delete_service(id: int, db: Session):
         db.rollback()
         raise HTTPException(status_code=500, detail="Failed to delete service. Error: {}".format(str(e))) 
 
-def update_service(id: int, service_data: ServiceModel, db: Session):
+def update_service(id: int, service_data, db: Session):
     service = db.query(Service).filter(Service.id == id).first()
 
     if not service:
@@ -100,3 +100,24 @@ def post_appointment(db: Session):
     except Exception as e:
         db.rollback()
         raise HTTPException(status_code=500, detail="Failed to create appointment. Error: {}".format(str(e))) 
+
+
+def update_appointment(id: int, service_data, db: Session):
+    appointment = db.query(Appointments).filter(Appointments.id == id).first()
+
+    if not appointment:
+        raise HTTPException(status_code=404, detail="service not found")
+
+    try:
+        for attr, value in service_data.items():
+            if hasattr(appointment, attr):
+                setattr(appointment, attr, value)
+        
+        db.commit()
+        db.refresh(appointment)
+        
+        return appointment
+    except Exception as e:
+        db.rollback()
+        raise HTTPException(status_code=500, detail="Failed to update service. Error: {}".format(str(e)))
+ 
